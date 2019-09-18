@@ -30,6 +30,8 @@ namespace ITEAHub.CoffeeShop.BusinessLogic
            //cashRegister = new //
            // menu = null2;
            // Create another objects
+
+            //Some comment 2
         }
         public void Start()
         {
