@@ -32,6 +32,8 @@ namespace ITEAHub.CoffeeShop.BusinessLogic
            // Create another objects
 
             //Some comment 2
+
+            //SomeCommenst
         }
         public void Start()
         {
