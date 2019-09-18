@@ -13,7 +13,7 @@ namespace ITEAHub.CoffeeShop.BusinessLogic
         public Run()
         {
            //cashRegister = new //
-           // menu = null;
+           // menu = null2;
            // Create another objects
         }
         public void Start()
