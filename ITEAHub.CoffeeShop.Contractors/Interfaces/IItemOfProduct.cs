@@ -7,7 +7,7 @@ namespace ITEAHub.CoffeeShop.Contractors.Interfaces
     /// <summary>
     /// Interface of CoffeeShop objects like products, orders, clients etc., which we save in files
     /// </summary>
-    interface IItemOfProducts
+    public interface IItemOfProduct
     {
         /// <summary>
         /// Unique identificator of object; we will can get object from file by ID
