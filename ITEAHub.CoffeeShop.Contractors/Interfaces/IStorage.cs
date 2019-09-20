@@ -4,7 +4,8 @@ using System.Text;
 
 namespace ITEAHub.CoffeeShop.Contractors.Interfaces
 {
-    public interface ISorage
+    public interface IStorage
     {
+
     }
 }
