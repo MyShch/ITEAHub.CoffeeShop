@@ -8,7 +8,7 @@ namespace ITEAHub.CoffeeShop.Main
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Coffee shop!");
-            (new Run()).Start();
+            new Run().Start();
         }
     }
 }

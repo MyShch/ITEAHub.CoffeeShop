@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\AbstractStorage.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ITEAHub.CoffeeShop.Contractors\ITEAHub.CoffeeShop.Contractors.csproj" />
   </ItemGroup>
 

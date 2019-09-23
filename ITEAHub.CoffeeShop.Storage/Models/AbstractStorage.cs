@@ -1,37 +1,34 @@
 ﻿using ITEAHub.CoffeeShop.Contractors.Interfaces;
 using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using ITEAHub.CoffeeShop.Contractors.Models;
+using ITEAHub.CoffeeShop.Storage.Interfaces;
 
 namespace ITEAHub.CoffeeShop.Storage.Models
 {
-    public abstract class AbstractStorage : IStorage
+    public abstract class AbstractStorage:IStorage
     {
-        public string Name { get; set; }
 
-        public void AddItem(List<IItemOfProduct> products)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract string Path { get;  }
 
-        public List<IItemOfProduct> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool IsItem(int itemID);
 
-        public IItemOfProduct GetItem(string name)
+        public void AddItem(IItemOfProduct products)
         {
-            throw new NotImplementedException();
-        }
+            var json = JsonConvert.SerializeObject(products);
 
-        public IItemOfProduct GetItem(int id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void RemoveItem(string name)
-        {
-            throw new NotImplementedException();
+            using (StreamWriter sw = new StreamWriter(Path, true, System.Text.Encoding.Default))
+            {
+                sw.WriteLine("[" + json +"]");
+            }
         }
+               
+
+        
+        
     }
 }

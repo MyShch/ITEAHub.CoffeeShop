@@ -14,9 +14,5 @@ namespace ITEAHub.CoffeeShop.Contractors.Interfaces
         /// </summary>
         int ID { get; set; }
 
-        /// <summary>
-        /// Name of object; we will can get object from file by name
-        /// </summary>
-        string Name { get; set; }
-    }
+       }
 }
