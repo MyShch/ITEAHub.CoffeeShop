@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\AbstractStorage.cs" />
+    <Compile Remove="Repository\AbstractStorage.cs" />
   </ItemGroup>
 
   <ItemGroup>

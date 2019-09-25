@@ -6,5 +6,9 @@ namespace ITEAHub.CoffeeShop.Contractors.Interfaces
 {
     public interface IItemOfMenu
     {
+        string Name { get; }
+        void Run();
+
+
     }
 }

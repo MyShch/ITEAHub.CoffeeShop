@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ITEAHub.CoffeeShop.Contractors.Interfaces;
+using ITEAHub.CoffeeShop.Contractors.Models;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using ITEAHub.CoffeeShop.Contractors.Interfaces;
-using ITEAHub.CoffeeShop.Contractors.Models;
-using ITEAHub.CoffeeShop.Storage.Interfaces;
 
-namespace ITEAHub.CoffeeShop.Storage.Models
+namespace ITEAHub.CoffeeShop.Storage.Repository
 {
-    public class OrderStore: IOrderStorage
-    {
-        public  string Path { get; }
-        public OrderStore(string path)
-        {
-            
-            this.Path = path;
+    public class ProductStore : IBaseRepository<Product>
 
+    {
+
+        private string Path { get; }
+        
+        public ProductStore(string path)
+        {
+            this.Path= path;
         }
 
-        public  bool IsItem(int id)
+        public bool IsItem(int id)
         {
             bool result = false;
             List<Product> temp_result = new List<Product>();
@@ -34,23 +34,21 @@ namespace ITEAHub.CoffeeShop.Storage.Models
             }
             return result;
         }
-        public List<IOrder> GetAll()
+       
+        public  List<Product> GetAll()
         {
-
-            List<IOrder> result = new List<IOrder>();
-            List<Order> temp_result = new List<Order>();
+            List<Product> result = new List<Product>();
+            List<Product> temp_result = new List<Product>();
 
             using (StreamReader sr = new StreamReader(this.Path))
             {
                 string json;
                 while ((json = sr.ReadLine()) != null)
                 {
-                    temp_result = JsonConvert.DeserializeObject<List<Order>>(json);
+                    temp_result = JsonConvert.DeserializeObject<List<Product>>(json);
                     result.Add(temp_result[0]);
                 }
             }
-
-
             return result;
 
         }
@@ -59,24 +57,24 @@ namespace ITEAHub.CoffeeShop.Storage.Models
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public  IOrder GetItem(string name)
+        public  Product GetItem(string name)
         {
-            IOrder result = new Order();
-            List<Order> temp_result = new List<Order>();
+            Product result = new Product();
+            List<Product> temp_result = new List<Product>();
             bool IsItem = false;
             using (StreamReader sr = new StreamReader(this.Path))
             {
                 string json;
                 while ((json = sr.ReadLine()) != null)
                 {
-                    temp_result = JsonConvert.DeserializeObject<List<Order>>(json);
-                    var res = temp_result[0].ID;
-                    if (res == 0)
+                    temp_result = JsonConvert.DeserializeObject<List<Product>>(json);
+                    var res = String.Compare(temp_result[0].Name, name);
+                    if (res==0)
                     {
                         result = temp_result[0];
                         IsItem = true;
                     }
-
+                    
                 }
             }
             if (IsItem) { return result; } else { return null; }
@@ -86,18 +84,18 @@ namespace ITEAHub.CoffeeShop.Storage.Models
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public IOrder GetItem(int id)
+        public Product GetItem(int id)
         {
-            IOrder result = new Order();
-            List<Order> temp_result = new List<Order>();
+            Product result = new Product();
+            
             bool IsItem = false;
             using (StreamReader sr = new StreamReader(this.Path))
             {
                 string json;
                 while ((json = sr.ReadLine()) != null)
                 {
-                    temp_result = JsonConvert.DeserializeObject<List<Order>>(json);
-                    if (temp_result[0].ID == id)
+                    var temp_result = JsonConvert.DeserializeObject<List<Product>>(json);
+                    if (temp_result[0].ID==id)
                     {
                         result = temp_result[0];
                         IsItem = true;
@@ -108,12 +106,47 @@ namespace ITEAHub.CoffeeShop.Storage.Models
             if (IsItem) { return result; } else { return null; }
         }
 
-        public bool RemoveItem(int id)
+        public bool Change(Product newItem)
+        {
+
+            List<Product> templist = new List<Product>();
+            bool isrec = IsItem(newItem.ID);
+            if (isrec)
+            {
+                using (StreamReader sr = new StreamReader(this.Path))
+                {
+                    string json;
+                    while ((json = sr.ReadLine()) != null)
+                    {
+                        var tempbonus = JsonConvert.DeserializeObject<List<Product>>(json);
+
+                        if (tempbonus[0].ID == newItem.ID)
+                        {
+                            tempbonus[0].Amount = newItem.Amount;
+                            templist.Add(tempbonus[0]);
+                        }
+                        else { templist.Add(tempbonus[0]); }
+                    }
+                }
+                using (StreamWriter sw = new StreamWriter(Path, false, System.Text.Encoding.Default))
+                {
+                    foreach (var item in templist)
+                    {
+                        sw.WriteLine("[" + JsonConvert.SerializeObject(item) + "]");
+                    }
+
+
+                }
+            }
+            return isrec;
+        }
+
+        public void RemoveItem(int id)
         {
             throw new NotImplementedException();
         }
 
-        public bool AddItem(IItemOfProduct product)
+        public bool AddItem(Product product)
         {
             var IsRec = IsItem(product.ID);
             var json = JsonConvert.SerializeObject(product);
@@ -122,5 +155,7 @@ namespace ITEAHub.CoffeeShop.Storage.Models
                 if (!IsRec) { sw.WriteLine("[" + json + "]"); return true; } else { return false; }
             }
         }
+
+       
     }
 }

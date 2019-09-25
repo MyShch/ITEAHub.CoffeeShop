@@ -5,13 +5,13 @@ using System.Text;
 
 namespace ITEAHub.CoffeeShop.Contractors.Models
 {
-    public class Order : IOrder
+    public class Order : BaseEntity
     {
-        public int ID { get; set; }
+        //public int ID { get; set; }
        
 
-        public ICustomer Customer { get; set; }
-        public List<IProduct> Product { get; set; }
+        public Customer Customer { get; set; }
+        public List<Product> Product { get; set; }
 
         public int Cash { get; set; }
 

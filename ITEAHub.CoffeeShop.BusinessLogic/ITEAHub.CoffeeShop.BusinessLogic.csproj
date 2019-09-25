@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ITEAHub.CoffeeShop.Contractors\ITEAHub.CoffeeShop.Contractors.csproj" />
+    <ProjectReference Include="..\ITEAHub.CoffeeShop.Menu\ITEAHub.CoffeeShop.Menu.csproj" />
     <ProjectReference Include="..\ITEAHub.CoffeeShop.Storage\ITEAHub.CoffeeShop.Storage.csproj" />
   </ItemGroup>
 

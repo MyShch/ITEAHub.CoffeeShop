@@ -5,10 +5,16 @@ using System.Text;
 
 namespace ITEAHub.CoffeeShop.Contractors.Models
 {
-    public class Bonus: IBonus
+    public class Bonus: BaseEntity
     {
-        public int ID { get; set; }
+        //public int ID { get; set; }
         public int Sum { get; set; }
+
+        public static int CreateBonusCard()
+        {
+            var rand = new Random();
+            return rand.Next(1000000, 9999999);
+        }
         
     }
 }

@@ -4,8 +4,11 @@ using System.Text;
 
 namespace ITEAHub.CoffeeShop.Contractors.Interfaces
 {
-    public interface IBonus: IItemOfProduct
+    public interface ICashStorage
     {
-        int Sum { get; set; }
+        int GetCash();
+
+        void PutCash(int sum);
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ITEAHub.CoffeeShop.BusinessLogic;
+
 using System;
 
 namespace ITEAHub.CoffeeShop.Main
@@ -7,7 +8,8 @@ namespace ITEAHub.CoffeeShop.Main
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Coffee shop!");
+            Console.WriteLine("Welcome to Coffee shop!"); 
+            
             new Run().Start();
         }
     }

@@ -4,27 +4,25 @@ using System.IO;
 using System.Text;
 using ITEAHub.CoffeeShop.Contractors.Interfaces;
 using ITEAHub.CoffeeShop.Contractors.Models;
-using ITEAHub.CoffeeShop.Storage.Interfaces;
 using Newtonsoft.Json;
 
-namespace ITEAHub.CoffeeShop.Storage.Models
+namespace ITEAHub.CoffeeShop.Storage.Repository
 {
-    public class CustomerStore: ICustomerStorage
+    public class CustomerStore: IBaseRepository <Customer>
     {
 
-        private  string Path { get; }
+        private  string _path { get; }
         public CustomerStore(string path)
         {
             
-            this.Path = path;
+            this._path = path;
 
         }
 
-        public  bool IsItem(int id)
+        public bool IsItem(int id)
         {
             bool result = false;
-            
-            using (StreamReader sr = new StreamReader(this.Path))
+            using (StreamReader sr = new StreamReader(_path))
             {
                 string json;
                 while ((json = sr.ReadLine()) != null)
@@ -35,13 +33,10 @@ namespace ITEAHub.CoffeeShop.Storage.Models
             }
             return result;
         }
-        public  List<ICustomer> GetAll()
+        public  List<Customer> GetAll()
         {
-
-            List<ICustomer> result = new List<ICustomer>();
-            
-
-            using (StreamReader sr = new StreamReader(this.Path))
+            List<Customer> result = new List<Customer>();
+            using (StreamReader sr = new StreamReader(_path))
             {
                 string json;
                 while ((json = sr.ReadLine()) != null)
@@ -57,12 +52,12 @@ namespace ITEAHub.CoffeeShop.Storage.Models
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public ICustomer GetItem(string name)
+        public Customer GetItem(string name)
         {
-            ICustomer result = new Customer();
+            Customer result = new Customer();
            
             bool IsItem = false;
-            using (StreamReader sr = new StreamReader(this.Path))
+            using (StreamReader sr = new StreamReader(this._path))
             {
                 string json;
                 while ((json = sr.ReadLine()) != null)
@@ -84,12 +79,12 @@ namespace ITEAHub.CoffeeShop.Storage.Models
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public  ICustomer GetItem(int id)
+        public Customer GetItem(int id)
         {
-            ICustomer result = new Customer();
+            Customer result = new Customer();
             
             bool IsItem = false;
-            using (StreamReader sr = new StreamReader(this.Path))
+            using (StreamReader sr = new StreamReader(this._path))
             {
                 string json;
                 while ((json = sr.ReadLine()) != null)
@@ -106,24 +101,38 @@ namespace ITEAHub.CoffeeShop.Storage.Models
             if (IsItem) { return result; } else { return null; }
         }
 
-        public ICustomer GetItem(string name, string surname)
+        public Customer GetItem(string name, string surname)
         {
             throw new NotImplementedException();
         }
 
-        public bool RemoveItem(int id)
+        public void RemoveItem(int id)
         {
             throw new NotImplementedException();
         }
 
-        public bool AddItem(IItemOfProduct product)
+        public bool AddItem(Customer product)
         {
             var IsRec = IsItem(product.ID);
             var json = JsonConvert.SerializeObject(product);
-            using (StreamWriter sw = new StreamWriter(Path, true, System.Text.Encoding.Default))
+            using (StreamWriter sw = new StreamWriter(_path, true, System.Text.Encoding.Default))
             {
-                if (!IsRec) { sw.WriteLine("[" + json + "]"); return true; } else { return false; }
+                if (!IsRec)
+                {
+                    sw.WriteLine("[" + json + "]");
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
+
+        public bool Change(Customer newItem)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

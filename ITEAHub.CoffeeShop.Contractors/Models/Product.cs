@@ -5,12 +5,12 @@ using ITEAHub.CoffeeShop.Contractors.Interfaces;
 
 namespace ITEAHub.CoffeeShop.Contractors.Models
 {
-    public class Product : IProduct
+    public class Product : BaseEntity
     {
-        public int ID { get; set; }
+        //public int ID { get; set; }
         public string Name { get; set; }
 
-        public double Price { get; set; }
+        public int Price { get; set; }
 
         public int Amount { get; set; }
 
